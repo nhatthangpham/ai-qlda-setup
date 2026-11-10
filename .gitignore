@@ -1,0 +1,16 @@
+# Only setup instructions go to GitHub. Never secrets or project data.
+*.token
+.env
+*.key
+*.pem
+settings.local.json
+machine.local.json
+*.log
+QLDA/
+*.pdf
+*.xls
+*.xlsx
+*.docx
+*.dwg
+*.mpp
+*.zip
