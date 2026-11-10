@@ -90,6 +90,38 @@ if (-not $up -and -not $Check -and (Test-Path (Join-Path $javisDir 'start-javis.
 }
 Add-Row 'Javis server (port 7777)' $(if ($up) { 'OK' } else { 'MISSING' }) 'http://127.0.0.1:7777/health'
 
+# --- 4. QLDA team for Javis: agents, workflows, memory template (never overwrites existing files)
+$kit   = Join-Path (Split-Path $PSScriptRoot) 'javis-brain'
+$brain = Join-Path $javisDir 'brains\Brain Default'
+if (-not (Test-Path $brain)) {
+    Add-Row 'QLDA team in Javis' 'MISSING' 'open Javis once (creates "Brain Default"), then run this script again'
+} else {
+    $copied = 0; $total = 0
+    foreach ($sub in 'agents', 'workflows', 'memory\facts') {
+        $src = Join-Path $kit $sub
+        if (-not (Test-Path $src)) { continue }
+        $dst = Join-Path $brain $sub
+        foreach ($f in Get-ChildItem $src -File -Filter *.md) {
+            $total++
+            $target = Join-Path $dst $f.Name
+            if (-not (Test-Path $target) -and -not $Check) {
+                New-Item -ItemType Directory -Force $dst | Out-Null
+                Copy-Item $f.FullName $target
+            }
+            if (Test-Path $target) { $copied++ }
+        }
+    }
+    # one index line in MEMORY.md so Javis loads the owner profile every time
+    $memIdx = Join-Path $brain 'memory\MEMORY.md'
+    $line = '- [Ho so chu may va cac du an](facts/ho-so-chu-may.md) - Xung ho, cong ty, du an dang chay, thu muc Drive, quy uoc gui thu'
+    if ((Test-Path (Join-Path $brain 'memory\facts\ho-so-chu-may.md')) -and -not $Check) {
+        if (-not (Test-Path $memIdx) -or -not (Select-String -Path $memIdx -Pattern 'facts/ho-so-chu-may.md' -SimpleMatch -Quiet)) {
+            Add-Content -Path $memIdx -Value $line -Encoding UTF8
+        }
+    }
+    Add-Row 'QLDA team in Javis' $(if ($copied -eq $total -and $total) { 'OK' } else { 'MISSING' }) "$copied / $total files (7 agents, 3 workflows, 1 memory)"
+}
+
 $rows | Format-Table -AutoSize -Wrap
 'Next (by the owner of the PC, see KET-NOI.md): sign in Claude Desktop, connectors, Javis Models, Antigravity.'
 $bad = @($rows | Where-Object { $_.Status -in 'MISSING', 'FAILED' })
