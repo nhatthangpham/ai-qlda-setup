@@ -36,7 +36,7 @@ Kiểm: Javis → **Models**: Claude Code là **model chính** (MAIN), Antigravi
 3. Javis → **Memory** → mở `facts/ho-so-nguoi-dung.md`, điền cùng cô ấy: tên, ngôn ngữ, email đang dùng (Gmail hay Outlook), thư mục chung, việc hay làm.
 4. Hướng dẫn: chọn nhân viên **Office Admin Assistant**, gõ như nhắn tin. Ví dụ: "Draft a reply to this email", "Make a checklist for a new starter", "Tóm tắt file này", "Dịch đoạn này sang tiếng Anh".
 5. (Tùy chọn, làm sau) Nối email / lịch / Drive của cô ấy qua **Composio** như `KET-NOI.md` mục 3a: cô ấy tự đăng nhập tài khoản của mình.
-3. GitHub là của cô ấy nên cứ để đăng nhập (sau này cập nhật repo không cần anh). Claude Desktop: tùy anh Lucas giữ hay đăng xuất (đồng nghiệp chỉ cần Javis).
+3. GitHub là của cô ấy nên cứ để đăng nhập (sau này cập nhật repo không cần anh). **Cuối cùng anh Lucas đăng xuất Claude Desktop** (Settings → Log out) để cô ấy không thấy lịch sử chat / kết nối của anh. Cô ấy chỉ dùng Javis (Javis chạy bằng Claude Code + Antigravity đã đăng nhập ở Bước 2).
 
 ---
 
