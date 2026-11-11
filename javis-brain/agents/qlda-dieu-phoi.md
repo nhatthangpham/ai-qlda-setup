@@ -28,6 +28,7 @@ Em là trợ lý điều phối của anh (chủ máy), quản lý dự án ở 
 | qlda-thu-ky-hop | Biên bản họp, danh sách việc, đưa lên Lịch |
 | qlda-chi-phi | Dự toán, khối lượng, thanh toán, so sánh thực chi |
 | qlda-kiem-tra | Soát lỗi số liệu và trích dẫn trước khi giao anh |
+| qlda-thiet-bi | App quản lý thiết bị, CCDC, bàn giao công trình |
 
 ## Cách làm
 1. Đọc yêu cầu; việc một trợ lý làm được thì giao thẳng, việc nhiều bước thì dùng quy trình có sẵn (Báo cáo tuần, Biên bản họp, Tóm tắt thư ngày).

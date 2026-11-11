@@ -119,7 +119,7 @@ if (-not (Test-Path $brain)) {
             Add-Content -Path $memIdx -Value $line -Encoding UTF8
         }
     }
-    Add-Row 'QLDA team in Javis' $(if ($copied -eq $total -and $total) { 'OK' } else { 'MISSING' }) "$copied / $total files (7 agents, 3 workflows, 1 memory)"
+    Add-Row 'QLDA team in Javis' $(if ($copied -eq $total -and $total) { 'OK' } else { 'MISSING' }) "$copied / $total files (8 agents, 3 workflows, 2 memory)"
 }
 
 $rows | Format-Table -AutoSize -Wrap

@@ -45,6 +45,7 @@ Claude và Gemini chỉ là **não**. **Javis** giữ cả "công ty": nhân vi�
 | 5_QLDA Thư ký họp | Claude | Biên bản họp, việc + người + hạn, nhắc lịch |
 | 6_QLDA Chi phí & Khối lượng | Claude | Dự toán, BOQ, thanh toán, vượt chi |
 | 7_QLDA Kiểm tra | **Gemini** | Soát số, ngày, nguồn trước khi giao chủ máy |
+| 8_QLDA Thiết bị & CCDC | **Claude Opus** | Nghiên cứu → đề xuất → chờ duyệt → dựng app quản lý thiết bị, CCDC, bàn giao công trình (yêu cầu gốc: `memory\facts\yeu-cau-quan-ly-thiet-bi.md`) |
 
 | Quy trình (workflow) | Các bước |
 |---|---|
@@ -56,7 +57,8 @@ Bộ nhớ: `memory\facts\ho-so-chu-may.md`, gồm xưng hô, công ty, danh sá
 Các quy trình để `off`. Chạy thử, thấy đúng mới bật `active` và đặt lịch (vd báo cáo tuần sáng thứ 6, tóm tắt thư 7h sáng).
 
 ## 4. Sau khi cài
-- Mở **Javis OS** trên Desktop → trang **Models** chọn **Claude Code** làm model chính; thêm **Google Antigravity CLI** làm model phụ (Gemini). Nếu tên model `gemini-3.8-flash-high` của nhân viên Kiểm tra không có trong danh sách, chọn model Gemini khác cho nhân viên đó.
+- Mở **Javis OS** trên Desktop → trang **Models** chọn **Claude Code** làm model chính; thêm **Google Antigravity CLI** làm model phụ (Gemini). Nếu tên model `gemini-3.8-flash-high` của nhân viên Kiểm tra không có trong danh sách, chọn model Gemini khác cho nhân viên đó. Nhân viên Thiết bị dùng `claude-opus-5-5`; nếu gói Claude của chủ máy không có Opus, đổi model của nhân viên đó về trống (dùng model chính).
+- Điền 4 câu trả lời (việc 7 trong CHUAN-BI.md) vào bảng mục 4 của `memory\facts\yeu-cau-quan-ly-thiet-bi.md`, đổi "Giả định" thành câu trả lời thật.
 - Thư mục làm việc gợi ý: `C:\Users\<user>\QLDA\` (mỗi dự án một thư mục con). Không để trong Desktop / Documents nếu các thư mục đó đồng bộ OneDrive.
 - Gợi ý việc QLDA cho AI: xem [CLAUDE.md](CLAUDE.md) mục "Việc AI làm được".
 

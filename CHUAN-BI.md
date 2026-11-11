@@ -1,6 +1,6 @@
 # Chuẩn bị trước tối thứ 7 (làm theo từng bước, khoảng 30 phút)
 
-Tối thứ 7 anh Lucas sẽ vào máy của bạn từ xa để cài trợ lý AI. Trước đó bạn làm 6 việc dưới đây. Làm xong việc nào thì đánh dấu ✅.
+Tối thứ 7 anh Lucas sẽ vào máy của bạn từ xa để cài trợ lý AI. Trước đó bạn làm 7 việc dưới đây. Làm xong việc nào thì đánh dấu ✅.
 
 **Lưu ý quan trọng:** mật khẩu là của riêng bạn. Không gửi mật khẩu cho ai, kể cả anh Lucas.
 
@@ -67,6 +67,33 @@ Từ việc 3 trở đi, chỗ nào hỏi email thì dùng Gmail này.
 
 ---
 
+## Việc 7. Trả lời 4 câu về quản lý thiết bị (cho trợ lý làm app thiết bị, CCDC)
+Mỗi câu chọn 1 đáp án, nhắn Zalo cho anh Lucas (ví dụ: "1B, 2C, 3A, 4B").
+
+**Câu 1. Công ty đang có bao nhiêu công trình cùng lúc?**
+- A. Dưới 3
+- B. Từ 3 đến 10
+- C. Trên 10
+
+**Câu 2. Muốn quản lý những gì?**
+- A. Chỉ máy móc, thiết bị thi công
+- B. Chỉ công cụ dụng cụ (CCDC)
+- C. Cả hai
+
+**Câu 3. Có cần tính khấu hao (giá trị còn lại theo thời gian) không?**
+- A. Có, theo dõi nguyên giá, khấu hao, phân bổ CCDC
+- B. Không, chỉ đếm số lượng và tình trạng
+
+**Câu 4. Muốn app làm đến mức nào?**
+- A. Cơ bản: nhập liệu và xem báo cáo
+- B. Nâng cao: tự tính, tự cảnh báo, có biểu đồ
+
+**Thêm (nếu có):** danh sách thiết bị hiện có (file Excel hoặc ảnh chụp sổ), danh sách công trình, danh sách phòng ban. Có thì gửi luôn, chưa có cũng không sao.
+
+✅ Xong khi: anh Lucas đã nhận 4 đáp án.
+
+---
+
 ## Tối thứ 7, trước giờ hẹn 10 phút
 1. **Cắm sạc** máy tính (cài mất khoảng 1–1,5 giờ).
 2. Kết nối **mạng ổn định** (Wi-Fi mạnh hoặc cắm dây mạng).
@@ -83,5 +110,6 @@ Từ việc 3 trở đi, chỗ nào hỏi email thì dùng Gmail này.
 | 1 | ID AnyDesk | 123 456 789 |
 | 2 | Tên tài khoản GitHub | tenban-qlda |
 | 3 | Báo đã xong việc 3, 5, 6 | "Claude Pro, Miro, Composio xong rồi" |
+| 4 | 4 đáp án việc 7 (và danh sách thiết bị nếu có) | "1B, 2C, 3A, 4B" |
 
 Kẹt ở bước nào thì chụp màn hình gửi anh Lucas.
