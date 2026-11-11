@@ -6,7 +6,8 @@
 # Sign-ins are NOT done here: see KET-NOI.md. No token or password is ever written by this script.
 # ASCII only on purpose (Windows PowerShell 5.1 reads BOM-less files as ANSI).
 #   Javis only, no QLDA team (coworker machine, see CAI-JAVIS.md): add -NoTeam
-param([switch]$Check, [switch]$NoTeam)
+#   Office admin assistant instead of the QLDA team: add -Team admin
+param([switch]$Check, [switch]$NoTeam, [ValidateSet('qlda', 'admin', 'none')][string]$Team = 'qlda')
 $ErrorActionPreference = 'Continue'
 
 $claudeExe = Join-Path $env:USERPROFILE '.local\bin\claude.exe'
@@ -91,13 +92,18 @@ if (-not $up -and -not $Check -and (Test-Path (Join-Path $javisDir 'start-javis.
 }
 Add-Row 'Javis server (port 7777)' $(if ($up) { 'OK' } else { 'MISSING' }) 'http://127.0.0.1:7777/health'
 
-# --- 4. QLDA team for Javis: agents, workflows, memory template (never overwrites existing files)
-$kit   = Join-Path (Split-Path $PSScriptRoot) 'javis-brain'
+# --- 4. Team for Javis: agents, workflows, memory template (never overwrites existing files)
+#   -Team qlda (default): javis-brain\      -Team admin: javis-brain-admin\      -NoTeam: nothing
+if ($NoTeam) { $Team = 'none' }
+$kitName = @{ qlda = 'javis-brain'; admin = 'javis-brain-admin' }[$Team]
+$label = "$Team team in Javis"
+$kit   = Join-Path (Split-Path $PSScriptRoot) "$kitName"
 $brain = Join-Path $javisDir 'brains\Brain Default'
-if ($NoTeam) {
-    Add-Row 'QLDA team in Javis' 'SKIPPED' '-NoTeam'
+$profileFile = @{ qlda = 'ho-so-chu-may.md'; admin = 'ho-so-nguoi-dung.md' }[$Team]
+if (-not $kitName) {
+    Add-Row 'Team in Javis' 'SKIPPED' "-Team $Team"
 } elseif (-not (Test-Path $brain)) {
-    Add-Row 'QLDA team in Javis' 'MISSING' 'open Javis once (creates "Brain Default"), then run this script again'
+    Add-Row $label 'MISSING' 'open Javis once (creates "Brain Default"), then run this script again'
 } else {
     $copied = 0; $total = 0
     foreach ($sub in 'agents', 'workflows', 'memory\facts') {
@@ -116,13 +122,16 @@ if ($NoTeam) {
     }
     # one index line in MEMORY.md so Javis loads the owner profile every time
     $memIdx = Join-Path $brain 'memory\MEMORY.md'
-    $line = '- [Ho so chu may va cac du an](facts/ho-so-chu-may.md) - Xung ho, cong ty, du an dang chay, thu muc Drive, quy uoc gui thu'
-    if ((Test-Path (Join-Path $brain 'memory\facts\ho-so-chu-may.md')) -and -not $Check) {
-        if (-not (Test-Path $memIdx) -or -not (Select-String -Path $memIdx -Pattern 'facts/ho-so-chu-may.md' -SimpleMatch -Quiet)) {
+    $line = @{
+        qlda  = '- [Ho so chu may va cac du an](facts/ho-so-chu-may.md) - Xung ho, cong ty, du an dang chay, thu muc Drive, quy uoc gui thu'
+        admin = '- [User profile](facts/ho-so-nguoi-dung.md) - Name, role, Perth time zone, AUD, email system, shared folders, regular tasks'
+    }[$Team]
+    if ((Test-Path (Join-Path $brain "memory\facts\$profileFile")) -and -not $Check) {
+        if (-not (Test-Path $memIdx) -or -not (Select-String -Path $memIdx -Pattern "facts/$profileFile" -SimpleMatch -Quiet)) {
             Add-Content -Path $memIdx -Value $line -Encoding UTF8
         }
     }
-    Add-Row 'QLDA team in Javis' $(if ($copied -eq $total -and $total) { 'OK' } else { 'MISSING' }) "$copied / $total files (8 agents, 3 workflows, 2 memory)"
+    Add-Row $label $(if ($copied -eq $total -and $total) { 'OK' } else { 'MISSING' }) "$copied / $total files from $kitName"
 }
 
 # --- 5. AI brains: Javis picks up Claude Code and Antigravity by itself once each CLI is signed in.

@@ -3,7 +3,7 @@
 Chủ máy làm **quản lý dự án ở một công ty xây dựng** (ở Lào). Trả lời bằng tiếng Việt, ngắn, dùng bảng khi so sánh hoặc liệt kê.
 
 ## Khi được nhờ "Cài Javis cho máy này theo CAI-JAVIS.md"
-Máy của đồng nghiệp anh Lucas, chỉ dùng Javis: làm đúng phần "Việc của Claude" trong `CAI-JAVIS.md`, **không** cài đội QLDA, bỏ qua phần QLDA bên dưới.
+Máy của đồng nghiệp anh Lucas, chỉ dùng Javis: làm đúng phần "Việc của Claude" trong `CAI-JAVIS.md`, cài trợ lý Admin (`-Team admin`), **không** cài đội QLDA, bỏ qua phần QLDA bên dưới. Người dùng hiện tại: admin văn phòng ở Perth (Australia/Perth, AUD).
 
 ## Khi được nhờ "cài máy theo README"
 1. Đọc `README.md` và `KET-NOI.md`.
