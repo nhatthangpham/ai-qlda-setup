@@ -5,7 +5,8 @@
 # Run tools\install_base.ps1 first (Git, Python 3.12, Node, uv, Chrome, Claude Desktop ...).
 # Sign-ins are NOT done here: see KET-NOI.md. No token or password is ever written by this script.
 # ASCII only on purpose (Windows PowerShell 5.1 reads BOM-less files as ANSI).
-param([switch]$Check)
+#   Javis only, no QLDA team (coworker machine, see CAI-JAVIS.md): add -NoTeam
+param([switch]$Check, [switch]$NoTeam)
 $ErrorActionPreference = 'Continue'
 
 $claudeExe = Join-Path $env:USERPROFILE '.local\bin\claude.exe'
@@ -93,7 +94,9 @@ Add-Row 'Javis server (port 7777)' $(if ($up) { 'OK' } else { 'MISSING' }) 'http
 # --- 4. QLDA team for Javis: agents, workflows, memory template (never overwrites existing files)
 $kit   = Join-Path (Split-Path $PSScriptRoot) 'javis-brain'
 $brain = Join-Path $javisDir 'brains\Brain Default'
-if (-not (Test-Path $brain)) {
+if ($NoTeam) {
+    Add-Row 'QLDA team in Javis' 'SKIPPED' '-NoTeam'
+} elseif (-not (Test-Path $brain)) {
     Add-Row 'QLDA team in Javis' 'MISSING' 'open Javis once (creates "Brain Default"), then run this script again'
 } else {
     $copied = 0; $total = 0
@@ -121,6 +124,11 @@ if (-not (Test-Path $brain)) {
     }
     Add-Row 'QLDA team in Javis' $(if ($copied -eq $total -and $total) { 'OK' } else { 'MISSING' }) "$copied / $total files (8 agents, 3 workflows, 2 memory)"
 }
+
+# --- 5. AI brains: Javis picks up Claude Code and Antigravity by itself once each CLI is signed in.
+# (Javis /providers needs the admin login, so this script does not read it: check Javis > Models.)
+Add-Row 'Sign in Claude Code' 'TODO' 'open a terminal: claude  then /login (browser)'
+Add-Row 'Sign in Antigravity' 'TODO' 'new PowerShell: & "$env:LOCALAPPDATA\agy\bin\agy.exe" (Google account), then Javis > Models > Antigravity'
 
 $rows | Format-Table -AutoSize -Wrap
 'Next (by the owner of the PC, see KET-NOI.md): sign in Claude Desktop, connectors, Javis Models, Antigravity.'

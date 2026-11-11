@@ -2,6 +2,9 @@
 
 Chủ máy làm **quản lý dự án ở một công ty xây dựng** (ở Lào). Trả lời bằng tiếng Việt, ngắn, dùng bảng khi so sánh hoặc liệt kê.
 
+## Khi được nhờ "Cài Javis cho máy này theo CAI-JAVIS.md"
+Máy của đồng nghiệp anh Lucas, chỉ dùng Javis: làm đúng phần "Việc của Claude" trong `CAI-JAVIS.md`, **không** cài đội QLDA, bỏ qua phần QLDA bên dưới.
+
 ## Khi được nhờ "cài máy theo README"
 1. Đọc `README.md` và `KET-NOI.md`.
 2. Chạy `tools\install_base.ps1 -Check`. Thiếu thì nhờ chủ máy mở PowerShell **Run as administrator** chạy bản không `-Check` (script hỏi mật khẩu AnyDesk: chủ máy tự gõ, có thể bỏ qua).
