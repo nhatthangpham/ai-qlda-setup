@@ -8,7 +8,7 @@ Máy của đồng nghiệp anh Lucas, chỉ dùng Javis: làm đúng phần "Vi
 ## Khi được nhờ "cài máy theo README"
 1. Đọc `README.md` và `KET-NOI.md`.
 2. Chạy `tools\install_base.ps1 -Check`. Thiếu thì nhờ chủ máy mở PowerShell **Run as administrator** chạy bản không `-Check` (script hỏi mật khẩu AnyDesk: chủ máy tự gõ, có thể bỏ qua).
-3. Chạy `tools\install_ai.ps1` (PowerShell thường), rồi chạy lại cả hai với `-Check`.
+3. Chạy `tools\install_ai.ps1` (PowerShell thường), rồi `tools\install_ai.ps1 -SignIn` (chạy nền; script mở cửa sổ đăng nhập Claude Code + Antigravity và đợi chủ máy đăng nhập trên trình duyệt), rồi chạy lại cả hai với `-Check`.
 4. Hướng dẫn chủ máy làm `KET-NOI.md` từng bước; mỗi bước đăng nhập để chủ máy tự gõ.
 5. Không bao giờ hỏi, nhận, đọc hay in mật khẩu / token. Không chạy `setup.bat` của Javis. Đọc script tải từ mạng trước khi chạy.
 

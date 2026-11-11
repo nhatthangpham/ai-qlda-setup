@@ -3,11 +3,15 @@
 #   Install:     powershell -ExecutionPolicy Bypass -File tools\install_ai.ps1
 # Run in a NORMAL PowerShell (not "Run as administrator"): these tools install into the user's profile.
 # Run tools\install_base.ps1 first (Git, Python 3.12, Node, uv, Chrome, Claude Desktop ...).
-# Sign-ins are NOT done here: see KET-NOI.md. No token or password is ever written by this script.
+# No token or password is ever read, typed or written by this script.
 # ASCII only on purpose (Windows PowerShell 5.1 reads BOM-less files as ANSI).
 #   Javis only, no QLDA team (coworker machine, see CAI-JAVIS.md): add -NoTeam
 #   Office admin assistant instead of the QLDA team: add -Team admin
-param([switch]$Check, [switch]$NoTeam, [ValidateSet('qlda', 'admin', 'none')][string]$Team = 'qlda')
+#   Sign the AI brains in for Javis: add -SignIn
+#     Opens a window for each brain that is not signed in yet (Claude Code: "claude auth login";
+#     Antigravity: agy.exe), the PERSON AT THE PC signs in in the browser, the script waits
+#     (up to 10 min each) and reports. Still by hand afterwards: Javis > Models (needs the Javis admin login).
+param([switch]$Check, [switch]$NoTeam, [switch]$SignIn, [ValidateSet('qlda', 'admin', 'none')][string]$Team = 'qlda')
 $ErrorActionPreference = 'Continue'
 
 $claudeExe = Join-Path $env:USERPROFILE '.local\bin\claude.exe'
@@ -135,11 +139,56 @@ if (-not $kitName) {
 }
 
 # --- 5. AI brains: Javis picks up Claude Code and Antigravity by itself once each CLI is signed in.
-# (Javis /providers needs the admin login, so this script does not read it: check Javis > Models.)
-Add-Row 'Sign in Claude Code' 'TODO' 'open a terminal: claude  then /login (browser)'
-Add-Row 'Sign in Antigravity' 'TODO' 'new PowerShell: & "$env:LOCALAPPDATA\agy\bin\agy.exe" (Google account), then Javis > Models > Antigravity'
+# Claude Code: "claude auth status" (JSON, loggedIn true/false).
+# Antigravity has no status command: read its own log (newest first). A sign-in writes
+# "OAuth: authenticated successfully"; a signed-out start writes "not logged into Antigravity".
+# Only these marker lines are matched; the e-mail in the log is never printed.
+function Test-ClaudeLogin {
+    if (-not (Test-Path $claudeExe)) { return $false }
+    try { [bool]((& $claudeExe auth status 2>$null | Out-String) | ConvertFrom-Json).loggedIn } catch { $false }
+}
+function Test-AgyLogin {
+    $logDir = Join-Path $env:USERPROFILE '.gemini\antigravity-cli\log'
+    if (-not (Test-Path $logDir)) { return $false }
+    foreach ($f in Get-ChildItem $logDir -File -Filter *.log | Sort-Object LastWriteTime -Descending | Select-Object -First 10) {
+        if (Select-String -Path $f.FullName -Pattern 'authenticated successfully|refreshed after login|doRefreshQuota: starting' -Quiet) { return $true }
+        if (Select-String -Path $f.FullName -Pattern 'not logged in' -SimpleMatch -Quiet) { return $false }
+    }
+    $false
+}
+function Wait-Login($name, [scriptblock]$test) {
+    for ($i = 0; $i -lt 120; $i++) {
+        if (& $test) { "$name signed in."; return }
+        if ($i % 6 -eq 0) { "  waiting for $name sign-in ... ($([int]($i * 5 / 60)) min)" }
+        Start-Sleep -Seconds 5
+    }
+    "$name not signed in after 10 min. Finish it in the browser, then run with -Check."
+}
+if ($SignIn -and -not $Check) {
+    if ((Test-Path $claudeExe) -and -not (Test-ClaudeLogin)) {
+        ''
+        '>>> Claude Code: a window opens and then the browser. Sign in to the Claude account and click Authorize.'
+        Start-Process powershell -ArgumentList '-NoExit', '-Command', "& '$claudeExe' auth login"
+        Wait-Login 'Claude Code' { Test-ClaudeLogin }
+    }
+    if ((Test-Path $agyExe) -and -not (Test-AgyLogin)) {
+        ''
+        '>>> Antigravity: a window opens and then the browser. Pick the Google account and click Allow.'
+        '    KEEP the Antigravity window open until the browser says it is done (closing it cancels the sign-in).'
+        '    No browser? Ctrl+click the https://accounts.google.com/... link in that window.'
+        Start-Process powershell -ArgumentList '-NoExit', '-Command', "& '$agyExe'" -WindowStyle Maximized
+        Wait-Login 'Antigravity' { Test-AgyLogin }
+    }
+}
+$claudeIn = Test-ClaudeLogin
+$agyIn    = Test-AgyLogin
+Add-Row 'Sign in Claude Code' $(if ($claudeIn) { 'OK' } else { 'TODO' }) $(if ($claudeIn) { 'signed in' } else { 'run this script with -SignIn' })
+Add-Row 'Sign in Antigravity' $(if ($agyIn) { 'OK' } else { 'TODO' }) $(if ($agyIn) { 'signed in (from agy log)' } else { 'run this script with -SignIn' })
+# Javis /providers needs the Javis admin login, so this script does not read or change it.
+Add-Row 'Javis > Models' 'INFO' 'by hand: Claude Code = MAIN; turn on the Google Antigravity CLI card'
 
 $rows | Format-Table -AutoSize -Wrap
-'Next (by the owner of the PC, see KET-NOI.md): sign in Claude Desktop, connectors, Javis Models, Antigravity.'
+if (-not ($claudeIn -and $agyIn)) { 'Brains not signed in yet: run again with -SignIn (the person at the PC signs in in the browser).' }
+'Next (by the owner of the PC, see KET-NOI.md): Javis > Models, Claude Desktop connectors, Composio.'
 $bad = @($rows | Where-Object { $_.Status -in 'MISSING', 'FAILED' })
 if ($bad.Count) { "RESULT: $($bad.Count) item(s) need attention."; exit 1 } else { 'RESULT: AI tools ready.'; exit 0 }

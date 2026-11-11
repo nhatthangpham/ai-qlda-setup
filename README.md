@@ -24,6 +24,7 @@ Repo này chỉ chứa **cách cài**. Không chứa token, mật khẩu, tài l
 | 2 | Tải repo: mở github.com/<chủ-repo>/ai-qlda-setup > **Code > Download ZIP**, giải nén vào `C:\Users\<user>\ai-qlda-setup` (repo Private thì đăng nhập GitHub đã được mời) | Người hỗ trợ | 3' |
 | 3 | PowerShell **Run as administrator** → `powershell -ExecutionPolicy Bypass -File "C:\Users\<user>\ai-qlda-setup\tools\install_base.ps1"` | Người hỗ trợ; chủ máy tự gõ mật khẩu AnyDesk nếu muốn cho hỗ trợ không cần Accept | 10–20' |
 | 4 | PowerShell **thường** (không Admin) → `powershell -ExecutionPolicy Bypass -File "C:\Users\<user>\ai-qlda-setup\tools\install_ai.ps1"` | Người hỗ trợ | 10' |
+| 4b | Đăng nhập não AI cho Javis: chạy lại `install_ai.ps1 -SignIn`. Script tự mở cửa sổ đăng nhập Claude Code và Antigravity, đợi, báo OK | Chủ máy đăng nhập trên trình duyệt (không đóng cửa sổ agy giữa chừng) | 5' |
 | 5 | Đăng nhập + kết nối theo [KET-NOI.md](KET-NOI.md) | Chủ máy gõ mật khẩu; người hỗ trợ chỉ chỗ bấm | 20–30' |
 | 6 | Kiểm tra: chạy lại 2 script với `-Check`, tất cả OK; thử các câu hỏi mẫu ở cuối KET-NOI.md | Người hỗ trợ | 5' |
 

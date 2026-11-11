@@ -20,12 +20,12 @@ Hai cổng, nối cả hai:
 | Miro | Đọc / vẽ sơ đồ tiến độ, sơ đồ tổ chức, brainstorm trên bảng Miro | Miro |
 | GitHub | Lưu tài liệu / mẫu biểu của mình, đồng bộ giữa các máy | GitHub |
 
-3. Mở tab **Code** một lần cho Claude Code đăng nhập cùng tài khoản.
+3. Claude Code (não của Javis) đăng nhập riêng: chạy `tools\install_ai.ps1 -SignIn`, script mở cửa sổ `claude auth login` → trình duyệt → bấm **Authorize**, rồi tự đợi và báo OK (cùng lúc lo luôn Antigravity ở mục 2).
 
 ## 2. Gemini
 | Cách | Làm gì |
 |---|---|
-| Gemini trong Javis (Antigravity CLI) | Mở PowerShell mới, chạy `& "$env:LOCALAPPDATA\agy\bin\agy.exe"`, đăng nhập tài khoản Google trong cửa sổ hiện ra. Rồi Javis → **Models** → bật **Google Antigravity CLI** |
+| Gemini trong Javis (Antigravity CLI) | Chạy `tools\install_ai.ps1 -SignIn` (tự mở cửa sổ agy và đợi), chọn tài khoản Google trên trình duyệt. **Đừng đóng cửa sổ agy** trước khi trình duyệt báo xong. Rồi Javis → **Models** → bật **Google Antigravity CLI** |
 | Gemini trên web | Chrome → gemini.google.com → đăng nhập → menu ⋮ → **Cast, save and share → Install page as app** để có biểu tượng trên Desktop |
 
 ## 3. Javis OS
